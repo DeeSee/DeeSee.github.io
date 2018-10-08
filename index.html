@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title></title>
+  <style>
+  body { font-size: 6em; padding-top: 40px; }
+  #outer_foo { height: 150vh; background-color: lightblue; }
+</style>
+</head>
+<body>
+<div id="outer_foo">
+  <div style="position: fixed; top: 40px; left: 0">
+    <div id="foo" >Start</div>
+    <div id="obscured_mode">Start</div>
+  </div>
+</div>
+  <script>
+    var d = document.getElementById('foo');
+    var obscured_mode = document.getElementById('obscured_mode');
+    obscured_mode.innerText = "Obscured state mode: " + window.YandexApplicationsAPIBackend.getObscuredStateMode();
+
+    d.innerText = window.YandexApplicationsAPIBackend.getPageState();
+    window.YandexApplicationsAPIBackend.on('pageStateChanged', () => {
+      d.innerText = window.YandexApplicationsAPIBackend.getPageState();
+    });
+  </script>
+</body>
+</html>
+
