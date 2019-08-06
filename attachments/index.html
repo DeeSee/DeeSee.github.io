@@ -1,0 +1,68 @@
+
+<!DOCTYPE html>
+  <html>
+    <head>
+      <title></title>
+      <style>
+        .content { text-align:center; }
+        .button { 
+          font-size: 2em; 
+          margin: 30px;
+        }
+      </style>
+    </head>
+    <body>
+      <div class="content">
+        <p><button class="button" onclick="showAttachmentsViewAllSingle();">Photo + Video, Single</button></p>
+        <p><button class="button" onclick="showAttachmentsViewPhotoSingle();">Photo, Single</button></p>
+        <p><button class="button" onclick="showAttachmentsViewVideoSingle();">Video, Single</button></p>
+        <p><button class="button" onclick="showAttachmentsViewAllMultiple();">Photo + Video, Multiple</button></p>
+        <p><button class="button" onclick="showAttachmentsViewPhotoMultiple();">Photo, Multiple</button></p>
+        <p><button class="button" onclick="showAttachmentsViewVideoMultiple();">Video, Multiple</button></p>
+      </div>
+      <script type="text/javascript">
+
+        function showAttachmentsViewAllSingle() {
+          showAttachmentsView([ "photo", "video" ], "single");
+        };
+
+        function showAttachmentsViewPhotoSingle() {
+          showAttachmentsView([ "photo" ], "single");
+        };
+
+        function showAttachmentsViewVideoSingle() {
+          showAttachmentsView([ "video" ], "single");
+        };
+
+        function showAttachmentsViewAllMultiple() {
+          showAttachmentsView([ "photo", "video" ], "multiple");
+        };
+
+        function showAttachmentsViewPhotoMultiple() {
+          showAttachmentsView([ "photo" ], "multiple");
+        };
+
+        function showAttachmentsViewVideoMultiple() {
+          showAttachmentsView([ "video" ], "multiple");
+        };
+
+        function showAttachmentsView(types, count) {
+          let metadata = {
+            "key": "ping/uploadtest",
+            "ts": "59c19bda830d3",
+            "sign": "bbe32bf99f06635da92d78439913a3aec8e23f5f0e4679b51d3f734b115f1c78",
+          }
+
+          let parameters = {
+            "fileTypes" : types,
+            "count": count,
+            "uploadURL" : "http://cache-mskstoredata02.cdn.yandex.net/vh-test.cdn.yandex.net/files/",
+            "metadata": metadata
+          }
+          window.yandex.attachments.showAttachmentsView(parameters, (result) => {
+            alert(result["type"])
+          });
+        };
+      </script>
+    </body>
+</html>
