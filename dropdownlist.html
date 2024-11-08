@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dropdown list input</title>
+</head>
+
+<body>
+  <label for="first-name">Имя:</label>
+  <input type="text" id="first-name">
+  <br>
+  <label for="last-name">Фамилия:</label>
+  <input type="text" id="last-name">
+  <br>
+  <label for="phone">Телефон:</label>
+  <input type="text" id="phone">
+  <br>
+  <label for="city">Город</label>
+  <input type="text" name="city" list="cityname" id="city">
+  <datalist id="cityname">
+    <option value="Boston">
+    <option value="Cambridge">
+  </datalist>
+</body>
+
+</html>

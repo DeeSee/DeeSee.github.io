@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <script>
+        function submit_data() {
+            var xhr = new XMLHttpRequest();
+            xhr.open('GET', 'https://sovetkali.github.io/success.html', false);
+            xhr.send();
+            window.location.href = "/success.html";
+        }
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <label for="name">Имя</label>
+    <input type="text" id="name" size="2000px">
+    <br>
+    <label for="email">Почта</label>
+    <input type="text" id="email">
+    <br>
+    <label for="phone">Телефон</label>
+    <input type="text" id="phone">
+    <input type="submit" value="Отправить" onclick="submit_data()" id="SUBMIT">
+</body>
+
+</html>

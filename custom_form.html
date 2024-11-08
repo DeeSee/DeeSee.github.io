@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Form with custom fields</title>
+</head>
+<body>
+    <form action="https://sovetkali.github.io/sovetkali.github.io/success.html">
+        <label for="full_name">ФИО</label>
+        <input type="text" id="full_name">
+        <br>
+        <label for="phone">Телефон</label>
+        <input type="text" id="phone">
+        <br>
+        <label>Почта</label>
+        <input type="text" id="email">
+        <br>
+        <hr>
+        <h2>Паспорт</h2>
+        <label for="pass_number">Номер</label>
+        <input type="text" id="pass_number" placeholder="серия и номер">
+        <br>
+        <label for="start">Дата выдачи:</label>
+        <input type="date" class="form-control" id="start">
+        <br>
+        <label for="additional_info_pass">Доп информация</label>
+        <textarea name="additional_info_pass"></textarea>
+        <br>
+        <hr>
+        <h2>СНИЛС</h2>
+        <label for="snils">Номер</label>
+        <input type="text" id="snils" placeholder="номер">
+        <br>
+        <label for="additional_info_snils">Доп информация</label>
+        <textarea name="additional_info_snils"></textarea>
+        <br>
+        <hr>
+        <h2>ИНН</h2>
+        <label for="INN">Номер</label>
+        <input type="text" id="INN" placeholder="номер">
+        <br>
+        <label for="additional_info_inn">Доп информация</label>
+        <textarea name="additional_info_inn"></textarea>
+        <br>
+        <hr>
+        <h2>Загранпаспорт</h2>
+        <label for="">Номер</label>
+        <input type="text" id="intpass_number" placeholder="серия и номер">
+        <br>
+        <label for="start">Действителен до:</label>
+        <input type="date" class="form-control" id="expiredDate">
+        <br>
+        <label for="additional_info_intpass">Доп информация</label>
+        <textarea name="additional_info_intpass"></textarea>
+        <hr>
+        <h2>Другие данные</h2>
+        <label for="login">Логин</label>
+        <input type="text" id="login">
+        <br>
+        <input type="submit" value="Отправить" >
+    </form>
+</body>
+</html>
