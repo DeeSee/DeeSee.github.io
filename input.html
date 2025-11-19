@@ -1,112 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, interactive-widget=resizes-content">
+<style>
+html, body {
+    margin: 0;
+    padding: 0;
+    background: #f5f5f7;
+    font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", sans-serif;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    /* Fix the body to the viewport to prevent document-level scrolling */
+    position: fixed;
+    inset: 0;
+    /* Prevent native pull-to-refresh / rubber banding behavior on the body */
+    overscroll-behavior: none;
+}
+.page {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    position: fixed; /* Fix to the viewport */
+    left: 0;
+    top: 0;
+    height: 100%; /* Fallback */
+}
+.content {
+    flex: 1;
+    overflow-y: auto; /* Internal scrolling */
+    padding: 32px 20px 24px;
+    box-sizing: border-box;
+    line-height: 1.4;
+    color: #1c1c1e;
+    -webkit-overflow-scrolling: touch;
+    /* Allow smooth scrolling but contain it */
+    overscroll-behavior-y: contain;
+}
+.input-bar {
+    flex-shrink: 0;
+    padding: 16px;
+    background: rgba(249, 249, 249, 0.95);
+    backdrop-filter: blur(12px);
+    box-shadow: 0 -1px 6px rgba(0, 0, 0, 0.08);
+}
+.input-bar input {
+    width: 100%;
+    padding: 14px 16px;
+    font-size: 17px;
+    border: 1px solid #d1d1d6;
+    border-radius: 14px;
+    box-sizing: border-box;
+    background: #fff;
+}
+</style>
+</head>
+<body>
+<div class="page">
+    <div class="content">
+        <h1>Mini Browser</h1>
+        <p>The page height follows the visual viewport.
+            When the keyboard shows, the layout shrinks instead of
+            scrolling.
+        </p>
+        <p>Scrollable content area...</p>
+    </div>
+    <div class="input-bar">
+        <input type="text" placeholder="Type something"
+            autocapitalize="sentences" />
+    </div>
+</div>
+<script>
+(function() {
+    const page = document.querySelector(".page");
 
-        <!DOCTYPE html>
-        <html lang="en">
-        <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width,
-            initial-scale=1, maximum-scale=1">
-        <style>
-        :root {
-            --visual-height: 100vh;
-            --input-height: 96px;
+    // Handle Visual Viewport resizing (iOS Safari keyboard handling)
+    const handleResize = () => {
+        // Force layout viewport to top
+        window.scrollTo(0, 0);
+        document.body.scrollTop = 0;
+
+        if (window.visualViewport) {
+            // Set the height to match the visible area
+            page.style.height = `${window.visualViewport.height}px`;
+            
+            // Note: We do NOT set 'top' here dynamically anymore because it causes 
+            // jitter/fighting with native rubber-banding if the scroll listener is active.
+            // With body position:fixed, top:0 should be sufficient.
+        } else {
+            // Fallback for browsers without Visual Viewport API
+            page.style.height = `${window.innerHeight}px`;
         }
-        html, body {
-            margin: 0;
-            padding: 0;
-            background: #f5f5f7;
-            font-family: -apple-system, BlinkMacSystemFont,
-                "Helvetica Neue", sans-serif;
-            height: var(--visual-height);
-            min-height: 0;
-            max-height: var(--visual-height);
-            width: 100%;
-            overflow: hidden;
-        }
-        body {
-            position: fixed;
-            inset: 0;
-            width: 100%;
-        }
-        .page {
-            display: flex;
-            flex-direction: column;
-            width: 100%;
-            height: var(--visual-height);
-        }
-        .content {
-            flex: 1;
-            overflow: auto;
-            height: calc(var(--visual-height) - var(--input-height));
-            padding: 32px 20px 24px;
-            box-sizing: border-box;
-            line-height: 1.4;
-            color: #1c1c1e;
-        }
-        .input-bar {
-            flex-shrink: 0;
-            padding: 16px;
-            background: rgba(249, 249, 249, 0.95);
-            backdrop-filter: blur(12px);
-            box-shadow: 0 -1px 6px rgba(0, 0, 0, 0.08);
-        }
-        .input-bar input {
-            width: 100%;
-            padding: 14px 16px;
-            font-size: 17px;
-            border: 1px solid #d1d1d6;
-            border-radius: 14px;
-            box-sizing: border-box;
-            background: #fff;
-        }
-        </style>
-        </head>
-        <body>
-        <div class="page">
-            <div class="content">
-                <h1>Mini Browser</h1>
-                <p>The page height follows the visual viewport.
-                    When the keyboard shows, the layout shrinks instead of
-                    scrolling.
-                </p>
-            </div>
-            <div class="input-bar">
-                <input type="text" placeholder="Type something"
-                    autocapitalize="sentences" />
-            </div>
-        </div>
-        <script>
-        (function() {
-            const root = document.documentElement;
-            const body = document.body;
-            const content = document.querySelector(".content");
-            const inputBar = document.querySelector(".input-bar");
-            const setViewportHeight = () => {
-                const viewport = window.visualViewport;
-                const height = viewport ? viewport.height : window.innerHeight;
-                const inputHeight = inputBar ? inputBar.offsetHeight : 0;
-                root.style.setProperty("--visual-height", `${height}px`);
-                root.style.setProperty("--input-height", `${inputHeight}px`);
-                const setHeights = element => {
-                    element.style.height = `${height}px`;
-                    element.style.minHeight = `${height}px`;
-                    element.style.maxHeight = `${height}px`;
-                };
-                setHeights(root);
-                setHeights(body);
-                if (content) {
-                    content.style.height =
-                        `calc(${height}px - ${inputHeight}px)`;
-                }
-            };
-            setViewportHeight();
-            window.addEventListener("resize", setViewportHeight);
-            if (window.visualViewport) {
-                window.visualViewport.addEventListener(
-                    "resize", setViewportHeight);
-                window.visualViewport.addEventListener(
-                    "scroll", setViewportHeight);
-            }
-        })();
-        </script>
-        </body>
-        </html>
+    };
+
+    // Initial sizing
+    handleResize();
+
+    // Add listeners
+    if (window.visualViewport) {
+        window.visualViewport.addEventListener("resize", handleResize);
+        // Removed "scroll" listener to prevent fighting with native elastic scroll
+    }
+    window.addEventListener("resize", handleResize);
+})();
+</script>
+</body>
+</html>
